@@ -1,4 +1,4 @@
-﻿Function Mount-VMisoImage
+Function Mount-VMisoImage
 {
     [CmdletBinding(DefaultParameterSetName = "Default", SupportsShouldProcess = $true)]
     param
