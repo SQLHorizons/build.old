@@ -1,6 +1,3 @@
-﻿#Reset-ComputerMachinePassword -Server IS-OC01 -Credential NORFOLK\OpsAdmin27
-#Restart-Computer -Force
-
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
 
 $library = "\\library\PoSh\00_Builds\00_SQLServer"
