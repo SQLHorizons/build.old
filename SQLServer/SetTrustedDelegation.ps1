@@ -2,7 +2,7 @@
 
 $parameters = @{
     ServiceAccount = "SA-DBOC45-SQLServer"
-    Credential = "NORFOLK\ncAdmin02"
+    Credential = "NORFOLK\ncXxxxx02"
     Verbose = $true
 }
 
