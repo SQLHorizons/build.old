@@ -26,7 +26,7 @@ and allocate to a schedule, see that node name $env:COMPUTERNAME is created befo
 "
     if (Test-Path $TEMPfiles)
     {
-        Set-Location $TEMPfiles
+        Push-Location $TEMPfiles
         if (Get-FileHash -Path $TEMPfiles\"IBM Tivoli Storage Manager Client.msi" -Algorithm MD5 | Where-Object { $_.Hash -eq $TSMFileHash.Hash })
         {
             $vcredist_x86parameters = @{
@@ -71,5 +71,6 @@ and allocate to a schedule, see that node name $env:COMPUTERNAME is created befo
                 if (Test-Path $TEMPfiles) { Remove-Item $TEMPfiles -Recurse -Force -ErrorAction SilentlyContinue}
             }
         }
+    Pop-Location
     }
 }
