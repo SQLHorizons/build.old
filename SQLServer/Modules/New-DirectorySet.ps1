@@ -1,4 +1,4 @@
-Function New-DirectorySet
+﻿Function New-DirectorySet
 {
     [CmdletBinding(DefaultParameterSetName = "Default", SupportsShouldProcess = $true)]
     param

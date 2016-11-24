@@ -13,8 +13,7 @@
         [string]$Database         
     )
 
-    [string]$connectionString = Get-ConnectionString -Server $DatabaseServer -Database $Database 
-    $SqlConnection = New-Object -TypeName System.Data.SqlClient.SqlConnection($connectionString);
+    $SqlConnection = Get-SQLConnection -Server $DatabaseServer -Database $Database;
     $SqlCommand    = Get-uspSetSAAccount -SqlConnection $SqlConnection -SQLServer $SQLServer -SACredential $SACredential;
 
     $SqlConnection.Open()

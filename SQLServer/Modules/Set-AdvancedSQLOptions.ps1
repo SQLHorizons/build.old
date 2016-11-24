@@ -15,7 +15,7 @@
         [bool]$XPCmdShellEnabled           = $true,
         [bool]$IsSqlClrEnabled             = $true,
         [bool]$RemoteDacConnectionsEnabled = $true
-    ) 
+    ) 
 
     try
     {

@@ -11,6 +11,8 @@
         [double]$tLogSize
     )
 
+    Get-SQLPSModule
+
     $cpuNo    = (Get-WmiObject -ComputerName $SQLServer -Class Win32_ComputerSystem -ErrorAction Stop).NumberOfLogicalProcessors; 
     if($cpuNo -gt 8) {$cpuNo = 8};
 
@@ -35,6 +37,7 @@
             $file = New-Object -TypeName Microsoft.SqlServer.Management.SMO.DataFile($tempdb, "tempdev0$id")
             Write-Verbose "Create file '$($file.Name)'; Set file size to $($DataSize/($cpuNo*1KB))...'"
             $file.FileName = "$($tempdb.Parent.PrimaryFilePath)\$("tempdev0$id").ndf"
+            Write-Verbose "Creating file $($file.FileName)..."
             $file.Create()
         }
         if($file.Size       -ne $DataSize/($cpuNo*1KB))   {$file.Size       = $DataSize/($cpuNo*1KB)}  ###

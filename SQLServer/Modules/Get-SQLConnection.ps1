@@ -1,4 +1,4 @@
-﻿Function Get-ConnectionString
+﻿Function Get-SQLConnection
 {
     [CmdletBinding(DefaultParameterSetName = "Default", SupportsShouldProcess = $true)]
     param
@@ -10,5 +10,6 @@
         [object]$IntegratedSecurity = $true
     )
 
-    Return "Server=$($Server);Database=$($Database);Integrated Security=$($IntegratedSecurity);"
+    $connectionString = "Server=$($Server);Database=$($Database);Integrated Security=$($IntegratedSecurity);"
+    Return New-Object -TypeName System.Data.SqlClient.SqlConnection($connectionString);
 }

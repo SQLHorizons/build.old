@@ -9,5 +9,5 @@
     {
         [string]$ServiceAccount = ($acc -split ('=')).Replace("`"","")[-1]
         if($ServiceAccount)
-            {Set-SQLNodePrivileges -ServiceAccount $ServiceAccount}
+        {Set-SQLNodePrivileges -ServiceAccount $ServiceAccount}
     }
