@@ -11,8 +11,6 @@
         [double]$tLogSize
     )
 
-    Get-SQLPSModule
-
     $cpuNo    = (Get-WmiObject -ComputerName $SQLServer -Class Win32_ComputerSystem -ErrorAction Stop).NumberOfLogicalProcessors; 
     if($cpuNo -gt 8) {$cpuNo = 8};
 
