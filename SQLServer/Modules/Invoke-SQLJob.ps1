@@ -9,8 +9,6 @@
         [string]$SQLjob
     )
 
-    Get-SQLPSModule
-
     $server    = New-Object Microsoft.SqlServer.Management.Smo.Server($sqlServer)
     $SQLAgent  = $server.JobServer
     $jobObject = $SQLAgent.Jobs.Item($SQLjob)
@@ -19,4 +17,3 @@
     Write-Verbose "SQL Agent job $($jobObject.LastRunOutcome)"
     Return $jobObject
 }
- 
