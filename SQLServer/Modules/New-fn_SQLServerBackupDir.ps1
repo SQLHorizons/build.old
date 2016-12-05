@@ -9,8 +9,6 @@
         [object]$Database  = "msdb"
     )
 
-    Get-SQLPSModule
-
     $SQLfunctionparameters = @{
         SQLServer   = $SQLServer
         Database    = $Database
