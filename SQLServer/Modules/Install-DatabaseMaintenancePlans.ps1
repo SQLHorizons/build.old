@@ -9,8 +9,6 @@ Function Install-DatabaseMaintenancePlans
         [object]$files
     )
     
-    Get-SQLPSModule
-    
     foreach ($file in $files)
     {
         Submit-SQLScript -InputFile $file -ServerInstance $SQLServer -ConnectionTimeout 300 -Verbose
