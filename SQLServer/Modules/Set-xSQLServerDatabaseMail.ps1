@@ -20,8 +20,6 @@
         [System.UInt16]$port = 25
     )
     
-    Get-SQLPSModule
-    
     if ($sqlServer)
     {
         Write-Verbose "Load the SMO assembly and create the server object, connecting to server '$($sqlServer)'"
