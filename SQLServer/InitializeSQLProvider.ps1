@@ -16,7 +16,6 @@ else
     $sqlpsPath = [System.IO.Path]::GetDirectoryName($item.Path)
 }
 
-
 #
 # Set mandatory variables for the SQL Server provider
 #
