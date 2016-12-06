@@ -19,7 +19,7 @@ Function New-SQLServiceAccounts
             GivenName = $SAAccount
             DisplayName = $SAAccount
             SamAccountName = $SAAccount
-            UserPrincipalName = "$($SAAccount.ToLower())@norfolk.police.uk"
+            UserPrincipalName = "$($SAAccount.ToLower())@sqlhorizons.com"
             Description = "SQL Service Account"
             Path = $AccountOU
             AccountPassword = $(Read-Host -AsSecureString "AccountPassword")
