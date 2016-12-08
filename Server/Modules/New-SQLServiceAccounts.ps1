@@ -8,6 +8,8 @@ Function New-SQLServiceAccounts
         [parameter(Mandatory = $true)]
         [string]$AccountOU,
         [parameter(Mandatory = $true)]
+        [string]$dnsDomain,
+        [parameter(Mandatory = $true)]
         [pscredential]$Credential
     )
     
@@ -19,7 +21,7 @@ Function New-SQLServiceAccounts
             GivenName = $SAAccount
             DisplayName = $SAAccount
             SamAccountName = $SAAccount
-            UserPrincipalName = "$($SAAccount.ToLower())@sqlhorizons.com"
+            UserPrincipalName = "$($SAAccount.ToLower())@$dnsDomain"
             Description = "SQL Service Account"
             Path = $AccountOU
             AccountPassword = $(Read-Host -AsSecureString "AccountPassword")
