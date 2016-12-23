@@ -31,13 +31,13 @@ Function New-SQLServiceAccounts
             PassThru = $true
         }
         
-        $User = New-ADUser @NewADUserparameters
+        $Account = New-ADUser @NewADUserparameters
         
-        if ($User.Name.Split("-")[-1] -eq "SQLServer")
+        if ($Account.Name.Split("-")[-1] -eq "SQLServer")
         {
             $SPNModifyparameters = @{
                 Credential = $Credential
-                TargetObject = [ADSI]"LDAP://$($User.DistinguishedName)"
+                Account = $Account
             }
             Grant-SPNModify @SPNModifyparameters
         }
