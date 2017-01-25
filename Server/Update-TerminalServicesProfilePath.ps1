@@ -1,11 +1,10 @@
 Remove-Variable TSProperties
 [Array]$TSProperties = $null
-$count = 0
     
 $ADUsers = Get-ADUser -Filter *
 
 $count = 0
-ForEach($UserObject in $ADUsers | Select-Object -First 10000)
+ForEach($UserObject in $ADUsers | Select-Object -First 10)
 {
     $ADSIObject = [ADSI]"LDAP://$($UserObject.DistinguishedName)"
     Try
