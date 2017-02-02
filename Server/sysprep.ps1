@@ -60,6 +60,7 @@ try
         "/generalize"
         "/shutdown"
         "/oobe"
+        "/mode:vm"
     )
 
     Start-Process $sysprep -ArgumentList $Arguments -Wait -WindowStyle Hidden
