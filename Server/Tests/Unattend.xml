@@ -3,7 +3,7 @@
     <settings pass="specialize">
         <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
             <ComputerName></ComputerName>
-            <ProductKey>MMTNY-BD6W8-QYR7K-VXV7H-7QXQ2</ProductKey>
+            <ProductKey>C3RCX-M6NRP-6CXC9-TW2F2-4RHYD</ProductKey>
             <RegisteredOrganization></RegisteredOrganization>
             <RegisteredOwner></RegisteredOwner>
             <DoNotCleanTaskBar>true</DoNotCleanTaskBar>
