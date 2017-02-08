@@ -1,5 +1,5 @@
 $Credential = Get-Credential
-$sccmClient = "\\ms-oc31.sqlhorizons.com\sms_cm1\Client"
+$sccmClient = "\\ms-oc31.$($env:USERDNSDOMAIN.ToLower())\sms_cm1\Client"
 $process    = "P:\ccmsetup.exe"
 $avservs    = "Sophos Message Router", "Sophos Agent", "Sophos AutoUpdate Service"
 $Sophos     = "HKLM:\SOFTWARE\Wow6432Node\Sophos"
