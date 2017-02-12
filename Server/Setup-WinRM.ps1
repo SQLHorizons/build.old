@@ -5,7 +5,6 @@ $ip = '"10.7.173.222"'
 
 Start-Process $winrm -ArgumentList quickconfig -Wait -WindowStyle Hidden
 
-
 $Arguments = @(
     "set winrm/config/client @{TrustedHosts=$ip}"
 )
