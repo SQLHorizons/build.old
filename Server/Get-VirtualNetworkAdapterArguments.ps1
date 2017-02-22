@@ -26,7 +26,7 @@ Function Get-VirtualNetworkAdapterArguments
     }
     Catch
     {
-        Throw $Error
+        Throw $Error[0]
     }
 }
 
