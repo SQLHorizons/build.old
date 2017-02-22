@@ -6,13 +6,13 @@ Function Get-VirtualNetworkAdapterArguments
         [parameter(Mandatory = $true)]
         [string]$VMMServer,
         [parameter(Mandatory = $true)]
-        [guid]$JobGroupId
+        [guid]$JobGroup
     )
     Try
     {
         $Arguments = @{
             VMMServer = $VMMServer
-            JobGroup = $JobGroupId
+            JobGroup = $JobGroup
             MACAddressType = "Dynamic"
             VLanEnabled = $false
             Synthetic = $true
@@ -30,4 +30,4 @@ Function Get-VirtualNetworkAdapterArguments
     }
 }
 
-Get-VirtualNetworkAdapterArguments -VMMServer $env:COMPUTERNAME -JobGroupId $([Guid]::NewGuid().ToString())
+Get-VirtualNetworkAdapterArguments -VMMServer $env:COMPUTERNAME -JobGroup $([Guid]::NewGuid().ToString())
