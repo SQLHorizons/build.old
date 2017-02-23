@@ -17,7 +17,7 @@ Function Expand-VMOSDisk
     $VirtualDiskDrive = Get-SCVirtualDiskDrive -VM $VirtualMachine | Where-Object {$_.Bus -eq 0 -and $_.Lun -eq 0}
 
     Expand-SCVirtualDiskDrive -VirtualDiskDrive $VirtualDiskDrive -VirtualHardDiskSizeGB $size -JobGroup $JobGroup
-    Set-SCVirtualMachine -VM $VirtualMachine -Name $VMName -JobGroup $JobGroup -JobVariable "JobVariable"
+    $SCVirtualMachine = Set-SCVirtualMachine -VM $VirtualMachine -Name $VMName -JobGroup $JobGroup -JobVariable "JobVariable"
 
     Return $JobVariable
 }
