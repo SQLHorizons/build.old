@@ -25,7 +25,11 @@ Function Expand-VMOSDisk
         Sleep -Seconds 20
     }
 
-    #Invoke-Command -ComputerName $VMName -ScriptBlock {Resize-Partition -DriveLetter C -Size (101870MB)}
+    $do = {
+        $maxsize = [math]::floor((Get-PartitionSupportedSize -DriveLetter C).SizeMax)
+        Resize-Partition -DriveLetter C -Size $maxsize
+    }
+    Invoke-Command -ComputerName $VMName -ScriptBlock $do
 }
 
 $ExpandDiskArguments = @{
