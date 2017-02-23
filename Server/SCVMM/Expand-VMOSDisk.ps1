@@ -19,7 +19,13 @@ Function Expand-VMOSDisk
     Expand-SCVirtualDiskDrive -VirtualDiskDrive $VirtualDiskDrive -VirtualHardDiskSizeGB $size -JobGroup $JobGroup
     $SCVirtualMachine = Set-SCVirtualMachine -VM $VirtualMachine -Name $VMName -JobGroup $JobGroup -JobVariable "JobVariable"
 
-    Return $JobVariable
+    while($JobVariable.Status -eq "Running")
+    {
+        Write-Host "Job Progress: $($JobVariable.Progress)"
+        Sleep -Seconds 20
+    }
+
+    #Invoke-Command -ComputerName $VMName -ScriptBlock {Resize-Partition -DriveLetter C -Size (101870MB)}
 }
 
 $ExpandDiskArguments = @{
