@@ -1,3 +1,6 @@
+#   Note, this function assumes a certain pattern of name is use for identifying owners,
+#   is this instance the owner names were like VM-OC101, VM-OC103, & VM-OC201.
+
 Function Set-VMOwners
 {
     [CmdletBinding(DefaultParameterSetName = "Default", SupportsShouldProcess = $true)]
@@ -13,8 +16,8 @@ Function Set-VMOwners
 
     switch -Wildcard (($resource.ownernode -split '')[6])
     {
-        "1" {Set-ClusterOwnerNode -InputObject $resource -Owners $((Get-SCVMHostCluster -Name $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 1});break}
-        "2" {Set-ClusterOwnerNode -InputObject $resource -Owners $((Get-SCVMHostCluster -Name $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 2});break}
+        "1" {Set-ClusterOwnerNode -InputObject $resource -Owners $((Get-SCVMHostCluster $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 1});break}
+        "2" {Set-ClusterOwnerNode -InputObject $resource -Owners $((Get-SCVMHostCluster $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 2});break}
         default {Throw "Failed to find owners"}
     }
 
