@@ -17,4 +17,8 @@ Function Set-VMOwners
         "2" {Set-ClusterOwnerNode -InputObject $resource -Owners $((Get-SCVMHostCluster -Name $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 2});break}
         default {Throw "Failed to find owners"}
     }
+
+    Read-SCVirtualMachine -VM $VMName -Force|Out-Null
 }
+
+Set-VMOwners -VMName "AS-OC181"
