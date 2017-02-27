@@ -25,6 +25,16 @@ Function Deploy-Quick2012R2VM
         $GuiRunOnceCommands = ""
         $DestinationLocation = "C:\ClusterStorage\$Volume\"
         $JobGroupId = [Guid]::NewGuid().ToString()
+        $Cluster = "OCCloud1"
+
+        <#
+        switch ($Tag)
+        {
+            "OCC MER1" {[string]$VMHost = $((Get-SCVMHostCluster $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 1})|Out-Gridview -PassThru -Title 'Select VM Host';break}
+            "OCC MER2" {[string]$VMHost = $((Get-SCVMHostCluster $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 2})|Out-Gridview -PassThru -Title 'Select VM Host';break}
+            default {Throw "Failed to find VMHost"}
+        }
+        #>
 
         ################################################################################################################################
 
@@ -37,8 +47,7 @@ Function Deploy-Quick2012R2VM
             EnableVMNetworkOptimization = $false
             EnableMACAddressSpoofing = $false
             EnableGuestIPNetworkVirtualizationUpdates = $false
-            IPv4AddressType = "Dynamic"
-            IPv6AddressType = "Dynamic"
+            IPv4AddressType = "Static"
             VMNetwork = Get-SCVMNetwork -VMMServer $VMMServer|Out-Gridview -PassThru -Title 'Select VM Network'
             }
 
