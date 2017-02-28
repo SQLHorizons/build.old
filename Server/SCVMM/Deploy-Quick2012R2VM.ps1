@@ -25,40 +25,22 @@ Function Deploy-Quick2012R2VM
         $GuiRunOnceCommands = ""
         $DestinationLocation = "C:\ClusterStorage\$Volume\"
         $JobGroupId = [Guid]::NewGuid().ToString()
-        $Cluster = "OCCloud1"
-
-        <#
-        switch ($Tag)
-        {
-            "OCC MER1" {[string]$VMHost = $((Get-SCVMHostCluster $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 1})|Out-Gridview -PassThru -Title 'Select VM Host';break}
-            "OCC MER2" {[string]$VMHost = $((Get-SCVMHostCluster $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 2})|Out-Gridview -PassThru -Title 'Select VM Host';break}
-            default {Throw "Failed to find VMHost"}
-        }
-        #>
 
         ################################################################################################################################
 
+        $SCHardwareProfile = Get-SCHardwareProfile -VMMServer $VMMServer | where {$_.Name -eq $HardwareProfile}
+        
         $NATArguments = @{
-            VMMServer = $VMMServer
-            JobGroup = $JobGroupId
-            MACAddressType = "Dynamic"
-            VLanEnabled = $false
-            Synthetic = $true
-            EnableVMNetworkOptimization = $false
-            EnableMACAddressSpoofing = $false
-            EnableGuestIPNetworkVirtualizationUpdates = $false
-            IPv4AddressType = "Static"
+            VirtualNetworkAdapter = Get-SCVirtualNetworkAdapter -HardwareProfile $SCHardwareProfile
             VMNetwork = Get-SCVMNetwork -VMMServer $VMMServer|Out-Gridview -PassThru -Title 'Select VM Network'
             }
 
-        New-SCVirtualNetworkAdapter @NATArguments
-
-        ################################################################################################################################
+        Set-SCVirtualNetworkAdapter @NATArguments
 
         $VMTemplateArguments = @{
-            Name = "Temporary Template for Build"
+            Name = "Temporary Template $([Guid]::NewGuid().ToString())" 
             Template = Get-SCVMTemplate -VMMServer $VMMServer | where {$_.Name -eq $SCVMTemplate}
-            HardwareProfile = Get-SCHardwareProfile -VMMServer $VMMServer | where {$_.Name -eq $HardwareProfile}
+            HardwareProfile = $SCHardwareProfile
             JobGroup = $JobGroupId
             ComputerName = $VMName
             TimeZone = 85
@@ -66,7 +48,7 @@ Function Deploy-Quick2012R2VM
             GuiRunOnceCommands = $GuiRunOnceCommands
             AnswerFile = $null
             OperatingSystem = Get-SCOperatingSystem -VMMServer $VMMServer | where {$_.Name -eq "Windows Server 2012 R2 Standard"}
-            }
+            } 
 
         $NewVMConfigurationArguments = @{
             Name = $VMName
@@ -74,8 +56,6 @@ Function Deploy-Quick2012R2VM
             }
     
         $VirtualMachineConfiguration = New-SCVMConfiguration @NewVMConfigurationArguments
-
-        ################################################################################################################################
 
         $SetVMConfigurationArguments = @{
             Description = $Description
