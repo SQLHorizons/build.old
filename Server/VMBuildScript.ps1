@@ -1,5 +1,4 @@
-$Volume = "Volume3"
-$VMName = "AS-OC181"
+$VMName = "AS-OC187"
 $Description = "Function: DC, Owner: Server Team, Built By Paul Maxfield, Build Date: $(Get-Date -Format dd/MM/yyyy)"
 $Tag = "OCC MER1"
 $size = 100
@@ -23,7 +22,7 @@ Pop-Location
 Try
 {   
 
-    $VMMServer = $env:COMPUTERNAME
+    $VMMServer = "ms-oc01.norfolk.co.uk"
     $JobGroupId = [Guid]::NewGuid().ToString()
     $Cluster = "OCCloud1"
 
@@ -33,6 +32,13 @@ Try
         "OCC MER2" {[string]$VMHost = $((Get-SCVMHostCluster $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 2})|Out-Gridview -PassThru -Title 'Select VM Host';break}
         default {Throw "Failed to find VMHost"}
     }
+
+    $ClusterStorage = Get-SCStorageVolume -VMHost $(Get-SCVMHost -ComputerName $VMHost) |
+        Select-Object Name, FreeSpace, VolumeLabel|
+            Where-Object{($_.VolumeLabel -split '')[7] -eq ($VMHost -split '')[6]}|
+                Out-Gridview -PassThru -Title 'Select Volume'
+
+    $Volume = ($ClusterStorage.Name -split "\\")[2]
 
     New-ADOCCServer -VMName $VMName -Description $Description -Tag $Tag
 
