@@ -1,9 +1,24 @@
-
 $Volume = "Volume3"
 $VMName = "AS-OC181"
 $Description = "Function: DC, Owner: Server Team, Built By Paul Maxfield, Build Date: $(Get-Date -Format dd/MM/yyyy)"
 $Tag = "OCC MER1"
 $size = 100
+
+#Configure Requirements
+Set-Location C:\Windows\System32
+Get-Module -ListAvailable Virtualmach* | Import-Module
+Get-Module -ListAvailable ActiveDirectory | Import-Module
+Get-Module -ListAvailable FailoverClusters | Import-Module
+Get-Module -ListAvailable OperationsManager | Import-Module
+
+$library = "\\library\PoSh\00_Builds\00_Server\SCVMM"
+Push-Location -Path $library
+
+foreach($module in Get-ChildItem)
+{
+    Import-Module ".\$module"
+}
+Pop-Location
 
 Try
 {   
