@@ -16,13 +16,12 @@ Function Deploy-Quick2012R2VM
         [parameter(Mandatory = $true)]
         [string]$Description,
         [parameter(Mandatory = $true)]
-        [string]$Tag,
-        [string]$SCVMTemplate = "OC Server 2012 R2 Template"
+        [string]$Tag
     )
 
     Try
     {
-        $GuiRunOnceCommands = ""
+        $GuiRunOnceCommands = "C:\Windows\ccmsetup\ccmsetup.exe SMSSITECODE=CM1 FSP=MS-OC33.norfolk.police.uk"
         $DestinationLocation = "C:\ClusterStorage\$Volume\"
         $JobGroupId = [Guid]::NewGuid().ToString()
 
@@ -37,9 +36,13 @@ Function Deploy-Quick2012R2VM
 
         Set-SCVirtualNetworkAdapter @NATArguments
 
+        [string]$SCVMTemplate = (Get-SCVMTemplate -VMMServer $VMMServer |
+            Where-Object {$_.Name -like "*Server 2012 R2 Template*"}).Name |
+                Out-Gridview -PassThru -Title "Select Template"
+
         $VMTemplateArguments = @{
             Name = "Temporary Template $([Guid]::NewGuid().ToString())" 
-            Template = Get-SCVMTemplate -VMMServer $VMMServer | where {$_.Name -eq $SCVMTemplate}
+            Template = Get-SCVMTemplate -VMMServer $VMMServer | Where-Object {$_.Name -eq $SCVMTemplate}
             HardwareProfile = $SCHardwareProfile
             JobGroup = $JobGroupId
             ComputerName = $VMName
@@ -47,7 +50,7 @@ Function Deploy-Quick2012R2VM
             LocalAdministratorCredential = Get-SCRunAsAccount -VMMServer "$VMMServer" -Name "LocalAdmin"
             GuiRunOnceCommands = $GuiRunOnceCommands
             AnswerFile = $null
-            OperatingSystem = Get-SCOperatingSystem -VMMServer $VMMServer | where {$_.Name -eq "Windows Server 2012 R2 Standard"}
+            OperatingSystem = Get-SCOperatingSystem -VMMServer $VMMServer | Where-Object {$_.Name -eq "Windows Server 2012 R2 Standard"}
             } 
 
         $NewVMConfigurationArguments = @{
