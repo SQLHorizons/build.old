@@ -7,18 +7,36 @@ Function Set-VMOwners
     param
     (
         [parameter(Mandatory = $true)]
-        [string]$VMName,
-        [string]$Cluster = "OCCloud1"
+        [string]$VMName
     )
 
-    $resource = Get-ClusterGroup -Cluster $Cluster|
-        Where-Object {$_.Name -like "*$VMName*"}
-
-    switch -Wildcard (($resource.ownernode -split '')[6])
+    if($VMName.Length -le 8)
     {
-        "1" {Set-ClusterOwnerNode -InputObject $resource -Owners $((Get-SCVMHostCluster $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 1});break}
-        "2" {Set-ClusterOwnerNode -InputObject $resource -Owners $((Get-SCVMHostCluster $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 2});break}
-        default {Throw "Failed to find owners"}
+        switch ($VMName.Split("-")[1].Substring(0,2))
+        {
+            "DE"{break}
+            "MA"{break}
+            "OC"
+            {
+                $resource = Get-ClusterGroup -Cluster "OCCloud1"|Where-Object {$_.Name -like "*$VMName*"};
+                switch -Wildcard (($resource.ownernode -split '')[6])
+                {
+                    "1"
+                    {
+                        Set-ClusterOwnerNode -InputObject $resource -Owners $((Get-SCVMHostCluster -Name "OCCloud1").Nodes.Computername|
+                            Where-Object {($_ -split '')[6] -eq 1});
+                        break
+                    }
+                    "2"
+                    {
+                        Set-ClusterOwnerNode -InputObject $resource -Owners $((Get-SCVMHostCluster -Name "OCCloud1").Nodes.Computername|
+                            Where-Object {($_ -split '')[6] -eq 2});
+                        break
+                    }
+                }
+            }
+            default {Throw "Failed to find OU for VMHost $VMName"}
+        }
     }
 
     Read-SCVirtualMachine -VM $VMName -Force|Out-Null
