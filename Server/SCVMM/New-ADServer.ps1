@@ -55,7 +55,7 @@ Function New-ADServer
 
         if (Get-ADOrganizationalUnit -Identity $ADPath)
         {
-            New-ADComputer -Name $VMName -SamAccountName $VMName -Description $Description -Path $ADPath -WhatIf
+            #New-ADComputer -Name $VMName -SamAccountName $VMName -Description $Description -Path $ADPath -WhatIf
             New-ADComputer -Name $VMName -SamAccountName $VMName -Description $Description -Path $ADPath
             Return $Tag
         }
