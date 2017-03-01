@@ -1,6 +1,5 @@
-$VMName = "AS-OC187"
-$Description = "Function: DC, Owner: Server Team, Built By Paul Maxfield, Build Date: $(Get-Date -Format dd/MM/yyyy)"
-$Tag = "OCC MER1"
+$VMName = "AS-DE37"
+$Description = "Function: STORM, Owner: Application Team, Built By Paul Maxfield, Build Date: $(Get-Date -Format dd/MM/yyyy)"
 $size = 100
 
 #Configure Requirements
@@ -21,15 +20,17 @@ Pop-Location
 
 Try
 {   
-
-    $VMMServer = "ms-oc01.norfolk.co.uk"
+    $VMMServer = "ms-oc01.norfolk.police.uk"
     $JobGroupId = [Guid]::NewGuid().ToString()
-    $Cluster = "OCCloud1"
+
+    $Tag = New-ADServer -VMName $VMName -Description $Description
 
     switch ($Tag)
     {
-        "OCC MER1" {[string]$VMHost = $((Get-SCVMHostCluster $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 1})|Out-Gridview -PassThru -Title 'Select VM Host';break}
-        "OCC MER2" {[string]$VMHost = $((Get-SCVMHostCluster $Cluster).Nodes.Computername|Where-Object {($_ -split '')[6] -eq 2})|Out-Gridview -PassThru -Title 'Select VM Host';break}
+        "OCC MER1" {[string]$VMHost = $((Get-SCVMHostCluster "OCCloud1").Nodes.Computername|Where-Object {($_ -split '')[6] -eq 1})|Out-Gridview -PassThru -Title 'Select VM Host';break}
+        "OCC MER2" {[string]$VMHost = $((Get-SCVMHostCluster "OCCloud1").Nodes.Computername|Where-Object {($_ -split '')[6] -eq 2})|Out-Gridview -PassThru -Title 'Select VM Host';break}
+        "DE MER3"  {[string]$VMHost = $((Get-SCVMHostCluster "DECloud1").Nodes.Computername)|Out-Gridview -PassThru -Title 'Select VM Host';break}
+        "MA PBX"   {[string]$VMHost = $((Get-SCVMHostCluster "MACloud1").Nodes.Computername)|Out-Gridview -PassThru -Title 'Select VM Host';break}
         default {Throw "Failed to find VMHost"}
     }
 
@@ -39,8 +40,6 @@ Try
                 Out-Gridview -PassThru -Title 'Select Volume'
 
     $Volume = ($ClusterStorage.Name -split "\\")[2]
-
-    New-ADOCCServer -VMName $VMName -Description $Description -Tag $Tag
 
     $Quick2012R2VM = @{
         VMMServer = $VMMServer
@@ -82,7 +81,7 @@ Try
             Set-WmiInstance -Arguments @{DriveLetter='R:'}|Out-Null
 
         #Install SCOM
-        $PrimaryMgmtServer = Get-SCOMManagementServer -ComputerName ms-oc14.norfolk.co.uk
+        $PrimaryMgmtServer = Get-SCOMManagementServer -ComputerName ms-oc14.norfolk.police.uk
         Install-SCOMAgent -DNSHostName "$VMName.$env:USERDNSDOMAIN" -PrimaryManagementServer $PrimaryMgmtServer[0]
 
         #Refresh Virtual Machine for SCVMM console
