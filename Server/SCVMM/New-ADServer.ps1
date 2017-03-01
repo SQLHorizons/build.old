@@ -23,7 +23,8 @@ Function New-ADServer
             {
                 [string]$ADPath = "OU=Virtual Servers,OU=MA,OU=Member Servers,DC=norfolk,DC=police,DC=uk";
                 [string]$Tag    = "MA PBX";
-                break}
+                break
+            }
             "OC"
             {
                 # What MER?
