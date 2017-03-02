@@ -1,4 +1,4 @@
-Function Get-SCVMIPv4Addresses
+Function Get-SCVMIPv4Address
 {
     [CmdletBinding(DefaultParameterSetName = "Default", SupportsShouldProcess = $true)]
     param
