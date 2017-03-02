@@ -15,14 +15,26 @@ Function New-ADServer
         {
             "DE"
             {
-                [string]$ADPath = "OU=Virtual Servers,OU=Dereham,OU=Member Servers,DC=norfolk,DC=police,DC=uk";
                 [string]$Tag    = "DE MER3";
+                $NewADComputer = @{
+                    Name = $VMName
+                    SamAccountName = $VMName
+                    Description = $Description
+                    Path = "OU=Virtual Servers,OU=Dereham,OU=Member Servers,DC=norfolk,DC=police,DC=uk"
+                    Server = "IS-DE10"
+                    };
                 break
             }
             "MA"
             {
-                [string]$ADPath = "OU=Virtual Servers,OU=MA,OU=Member Servers,DC=norfolk,DC=police,DC=uk";
                 [string]$Tag    = "MA PBX";
+                $NewADComputer = @{
+                    Name = $VMName
+                    SamAccountName = $VMName
+                    Description = $Description
+                    Path = "OU=Virtual Servers,OU=MA,OU=Member Servers,DC=norfolk,DC=police,DC=uk"
+                    Server = "IS-MA10"
+                    };
                 break
             }
             "OC"
@@ -38,14 +50,26 @@ Function New-ADServer
                 {
                     "MER1"
                     {
-                        [string]$ADPath = "OU=MER1 Hyper-V,OU=Production Virtual Servers,OU=OCC,OU=Member Servers,DC=norfolk,DC=police,DC=uk";
                         [string]$Tag    = "OCC MER1";
+                        $NewADComputer = @{
+                            Name = $VMName
+                            SamAccountName = $VMName
+                            Description = $Description
+                            Path = "OU=MER1 Hyper-V,OU=Production Virtual Servers,OU=OCC,OU=Member Servers,DC=norfolk,DC=police,DC=uk"
+                            Server = "IS-OC10"
+                            };
                         break
                     }
                     "MER2"
                     {
-                        [string]$ADPath = "OU=MER2 Hyper-V,OU=Production Virtual Servers,OU=OCC,OU=Member Servers,DC=norfolk,DC=police,DC=uk";
                         [string]$Tag    = "OCC MER2";
+                        $NewADComputer = @{
+                            Name = $VMName
+                            SamAccountName = $VMName
+                            Description = $Description
+                            Path = "OU=MER2 Hyper-V,OU=Production Virtual Servers,OU=OCC,OU=Member Servers,DC=norfolk,DC=police,DC=uk"
+                            Server = "IS-OC10"
+                            };
                         break
                     }
                 }
@@ -55,8 +79,8 @@ Function New-ADServer
 
         if (Get-ADOrganizationalUnit -Identity $ADPath)
         {
-            #New-ADComputer -Name $VMName -SamAccountName $VMName -Description $Description -Path $ADPath -WhatIf
-            New-ADComputer -Name $VMName -SamAccountName $VMName -Description $Description -Path $ADPath
+            New-ADComputer @NewADComputer -WhatIf
+            New-ADComputer @NewADComputer
             Return $Tag
         }
         else
