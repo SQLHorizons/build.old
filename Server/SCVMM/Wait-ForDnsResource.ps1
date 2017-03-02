@@ -20,7 +20,7 @@ Function Wait-ForDnsResource
     while (-not(Get-DnsServerResourceRecord @DnsServerResourceRecord))
     {
         Write-Host $i
-        Start-Sleep -Seconds 5
+        Start-Sleep -Seconds 300
         $i++
     }
 }
