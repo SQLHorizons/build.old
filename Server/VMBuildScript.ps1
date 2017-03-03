@@ -1,4 +1,4 @@
-$VMName = "AS-DE37"
+$VMName = "AS-DE40"
 $Description = "Function: STORM, Owner: Application Team, Built By Paul Maxfield, Build Date: $(Get-Date -Format dd/MM/yyyy)"
 $size = 100
 
@@ -75,8 +75,12 @@ Try
             Expand-VMOSDisk @ExpandDiskArguments
         }
 
+        $IPv4Address = Get-SCVMIPv4Address -VMMServer $VMMServer -VMName $VMName
+
+        Wait-ForDnsResource -VMName $VMName -DNServer "IS-OC10"
+
         #Set DVD/CD to R:
-        Get-WmiObject -Computer $VMName -Class Win32_volume -Filter 'DriveType=5' |
+        Get-WmiObject -Computer $IPv4Address -Class Win32_volume -Filter 'DriveType=5' |
             Select-Object -First 1 |
             Set-WmiInstance -Arguments @{DriveLetter='R:'}|Out-Null
 
