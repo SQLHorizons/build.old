@@ -25,11 +25,13 @@ Function Expand-VMOSDisk
         Sleep -Seconds 20
     }
 
+    $IPv4Address = Get-SCVMIPv4Address -VMMServer $VMMServer -VMName $VMName
+
     $do = {
         $maxsize = [math]::floor((Get-PartitionSupportedSize -DriveLetter C).SizeMax)
         Resize-Partition -DriveLetter C -Size $maxsize
     }
-    Invoke-Command -ComputerName $VMName -ScriptBlock $do
+    Invoke-Command -ComputerName $IPv4Address -ScriptBlock $do
 }
 
 $ExpandDiskArguments = @{
