@@ -4,6 +4,7 @@ Function Add-FailoverClustering
     {
         Install-WindowsFeature -Name Failover-Clustering –IncludeManagementTools
     }
+    Restart-Computer -Force
 }
 
 Add-FailoverClustering
