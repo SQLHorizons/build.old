@@ -10,4 +10,4 @@ Function Initialize-Disks
     }
 }
 
-Set-DisksOnline
+Initialize-Disks
