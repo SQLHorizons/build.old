@@ -1,3 +1,4 @@
+
 Function New-TwoNodeCluster
 {
     [CmdletBinding(DefaultParameterSetName = "Default", SupportsShouldProcess = $true)]
@@ -10,7 +11,7 @@ Function New-TwoNodeCluster
         [parameter(Mandatory = $true)]
         [string]$clusterName,
         [parameter(Mandatory = $true)]
-        [string]$StaticAddress
+        [object]$StaticAddress
     )
 
     $Cluster = New-Cluster -Name $clusterName -Node $NodeA, $NodeB -StaticAddress $StaticAddress
@@ -18,10 +19,10 @@ Function New-TwoNodeCluster
 }
 
 $TwoNodeCluster = @{
-    NodeA = "cdb-oc01a.norfolk.uk"
-    NodeB = "cdb-oc01b.norfolk.uk"
+    NodeA = "cdb-oc01a.norfolk.police.uk"
+    NodeB = "cdb-oc01b.norfolk.police.uk"
     clusterName = "CDB-OC01"
-    StaticAddress = "10.34.81.20"
+    StaticAddress = "10.34.81.20", "10.34.82.20"
     }
 
 New-TwoNodeCluster @TwoNodeCluster
