@@ -3,5 +3,5 @@ This reference provides cmdlet descriptions and syntax for all failover cluster-
 The Windows PowerShell cmdlets provide an alternative interface for actions that you might otherwise perform with command-line commands or the Failover Cluster Manager snap-in. For more information about using Windows PowerShell, see "Additional references," later in this topic.
 
 
-[Windows Server® 2008 R2](https://technet.microsoft.com/en-gb/library/ee461009.aspx)
-[Windows Server® 2012 R2 - 2016](https://technet.microsoft.com/itpro/powershell/windows/failover-clusters/index)
+* [Windows Server® 2008 R2](https://technet.microsoft.com/en-gb/library/ee461009.aspx)
+* [Windows Server® 2012 R2 - 2016](https://technet.microsoft.com/itpro/powershell/windows/failover-clusters/index)
