@@ -5,3 +5,7 @@ The Windows PowerShell cmdlets provide an alternative interface for actions that
 
 Windows 2008 - link https://technet.microsoft.com/en-gb/library/ee461009.aspx
 Windows 2012 - 2016 link https://technet.microsoft.com/itpro/powershell/windows/failover-clusters/index
+
+
+http://github.com - automatic!
+[GitHub](http://github.com)
