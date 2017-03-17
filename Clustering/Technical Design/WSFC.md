@@ -16,8 +16,9 @@ For a Windows Server Failover Cluster to preform appropriately it relies on a qu
 Best practices for an even number of voting nodes is to use the **Node and File Share Majority** quorum mode.  This is dependent on a remote file share configured as a voting witness.  Ideally this file share should be in an alternative location to the A, and B nodes of the Cluster.
 
 The table below details the configuration of the file share witness:
-Server | <ServerName>
+
+Server | *ServerName*
 ------------ | -------------
-Share Name | <ServerName>-Quorum
-Folder Path | T:\Data_X\<ServerName>-Quorum
+Share Name | *ServerName*-Quorum
+Folder Path | T:\Data_X\*ServerName*-Quorum
 Share Permissions | Everyone - Full Control
