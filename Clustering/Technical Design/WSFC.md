@@ -33,7 +33,7 @@ SQL |  | Where the SQL Server resources will reside.
 MSDTC |  | Responsible for coordinating any distributed transactions.
 
 ## Cluster Storage Disks
-The initial cluster configuration will prepare any shared storage available to the cluster nodes, assigning these to the Available Storage group.  As the SQL Server install process is unaware of mount points and the required configuration these disks are to be setup and assigned to the SQL role before starting the SQL Server install process, see Section 5.1.2 - Operating System and SQL Disk Configuration and assign to the SQL role.
+The initial cluster configuration will prepare any shared storage available to the cluster nodes, assigning these to the Available Storage group.  As the SQL Server install process is unaware of mount points and the required configuration these disks are to be setup and assigned to the SQL role before starting the SQL Server install process, see Section *Operating System and SQL Disk Configuration* and assign to the SQL role.
 The following screenshot illustrates how the disks should appear in Failover Cluster Manager before proceeding with the SQL install.
 
 ## Cluster Networks
