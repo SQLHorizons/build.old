@@ -22,3 +22,17 @@ Server | *ServerName*
 Share Name | *ServerName-Quorum*
 Folder Path | *T:\Data_X\ServerName-Quorum*
 Share Permissions | Everyone - Full Control
+
+## Cluster Roles
+A cluster role is a group of resources that can be uniquely identified by a Virtual Computer Object (VCO) which is created in the Active Directory, by default, all VCOs for the cluster are created in the same container or OU as the CNO; to complete the build of the cluster the following roles will need to be provisioned:
+
+Name | VCO | Role
+Cluster | | Monitors to overall health of the WSFC and arbitrates on the quorum.
+SQL | | Where the SQL Server resources will reside.
+MSDTC | | Responsible for coordinating any distributed transactions.
+
+## Cluster Storage Disks
+The initial cluster configuration will prepare any shared storage available to the cluster nodes, assigning these to the Available Storage group.  As the SQL Server install process is unaware of mount points and the required configuration these disks are to be setup and assigned to the SQL role before starting the SQL Server install process, see Section 5.1.2 - Operating System and SQL Disk Configuration and assign to role DB-OC01.
+The following screenshot illustrates how the disks should appear in Failover Cluster Manager before proceeding with the SQL install.
+
+## Cluster Networks
