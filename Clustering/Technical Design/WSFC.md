@@ -27,6 +27,7 @@ Share Permissions | Everyone - Full Control
 A cluster role is a group of resources that can be uniquely identified by a Virtual Computer Object (VCO) which is created in the Active Directory, by default, all VCOs for the cluster are created in the same container or OU as the CNO; to complete the build of the cluster the following roles will need to be provisioned:
 
 Name | VCO | Role
+------------ | ------------ | -------------
 Cluster | a | Monitors to overall health of the WSFC and arbitrates on the quorum.
 SQL | a | Where the SQL Server resources will reside.
 MSDTC | a | Responsible for coordinating any distributed transactions.
