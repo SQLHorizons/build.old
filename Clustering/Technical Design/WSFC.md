@@ -37,3 +37,11 @@ The initial cluster configuration will prepare any shared storage available to t
 The following screenshot illustrates how the disks should appear in Failover Cluster Manager before proceeding with the SQL install.
 
 ## Cluster Networks
+The following table details the function and configuration of each network adapter within the cluster:
+
+Function | Name | Cluster Use
+------------ | ------------ | -------------
+Heartbeat Node A | v-lan-XXX-hb | Cluster Only
+Heartbeat Node B | v-lan-XXX-hb | Cluster Only
+Public Node A | v-lan-XXX | Cluster and Client
+Public Node B | v-lan-XXX | Cluster and Client
