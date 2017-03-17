@@ -10,7 +10,7 @@ When a WSFC is first created its name is registered as the cluster computer with
 
 To ensure that this action is successful the logged on account must be either a member of **Domain Admins** or given the **Create Computer Objects** and **Read All Properties** permissions in the OU of the Cluster Nodes.
 Once the cluster has been created ensure the CNO also has the **Create Computer Objects** and **Read All Properties** permissions in the OU.
-## Quorum Mode
+## [Quorum Mode](https://msdn.microsoft.com/en-us/library/hh270280.aspx)
 For a Windows Server Failover Cluster to preform appropriately it relies on a quorum-based approach to monitor overall cluster health and maximize node-level fault tolerance.  Wherein the overall health and status of the cluster is determined by a periodic quorum vote. The presence of a quorum means that the cluster is healthy and able to provide node-level fault tolerance.
 
 Best practices for an even number of voting nodes is to use the **Node and File Share Majority** quorum mode.  This is dependent on a remote file share configured as a voting witness.  Ideally this file share should be in an alternative location to the A, and B nodes of the Cluster.
