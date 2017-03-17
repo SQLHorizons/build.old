@@ -7,6 +7,7 @@ The nodes in the WSFC cluster work together to collectively provide these types 
   * Failover coordination.
 ## Cluster Active Directory Objects
 When a WSFC is first created its name is registered as the cluster computer within the Active Directory, if you specify a NetBIOS name for the cluster, the Cluster Name Object (CNO) is created in the same location where the computer objects for the cluster nodes reside.  To specify a different location for the CNO, enter the distinguished name of the Organisational Unit (OU) in the **Cluster Name** box. Use the following distinguished name to register the CNO: *CN=ClusterName, OU=Clusters, DC=Contoso, DC=com*.
+
 To ensure that this action is successful the logged on account must be either a member of **Domain Admins** or given the **Create Computer Objects** and **Read All Properties** permissions in the OU of the Cluster Nodes.
 Once the cluster has been created ensure the CNO also has the **Create Computer Objects** and **Read All Properties** permissions in the OU.
 ## Quorum Mode
