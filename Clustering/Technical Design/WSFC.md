@@ -28,12 +28,12 @@ A cluster role is a group of resources that can be uniquely identified by a Virt
 
 Name | VCO | Role
 ------------ | ------------ | -------------
-Cluster | a | Monitors to overall health of the WSFC and arbitrates on the quorum.
-SQL | a | Where the SQL Server resources will reside.
-MSDTC | a | Responsible for coordinating any distributed transactions.
+Cluster |  | Monitors to overall health of the WSFC and arbitrates on the quorum.
+SQL |  | Where the SQL Server resources will reside.
+MSDTC |  | Responsible for coordinating any distributed transactions.
 
 ## Cluster Storage Disks
-The initial cluster configuration will prepare any shared storage available to the cluster nodes, assigning these to the Available Storage group.  As the SQL Server install process is unaware of mount points and the required configuration these disks are to be setup and assigned to the SQL role before starting the SQL Server install process, see Section 5.1.2 - Operating System and SQL Disk Configuration and assign to role DB-OC01.
+The initial cluster configuration will prepare any shared storage available to the cluster nodes, assigning these to the Available Storage group.  As the SQL Server install process is unaware of mount points and the required configuration these disks are to be setup and assigned to the SQL role before starting the SQL Server install process, see Section 5.1.2 - Operating System and SQL Disk Configuration and assign to the SQL role.
 The following screenshot illustrates how the disks should appear in Failover Cluster Manager before proceeding with the SQL install.
 
 ## Cluster Networks
