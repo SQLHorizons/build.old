@@ -19,6 +19,6 @@ The table below details the configuration of the file share witness:
 
 Server | *ServerName*
 ------------ | -------------
-Share Name | *ServerName*-Quorum
-Folder Path | T:\Data_X\*ServerName*-Quorum
+Share Name | *ServerName-Quorum*
+Folder Path | *T:\Data_X\ServerName-Quorum*
 Share Permissions | Everyone - Full Control
