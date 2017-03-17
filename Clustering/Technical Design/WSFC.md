@@ -14,4 +14,5 @@ Once the cluster has been created ensure the CNO also has the **Create Computer 
 For a Windows Server Failover Cluster to preform appropriately it relies on a quorum-based approach to monitor overall cluster health and maximize node-level fault tolerance.  Wherein the overall health and status of the cluster is determined by a periodic quorum vote. The presence of a quorum means that the cluster is healthy and able to provide node-level fault tolerance.
 
 Best practices for an even number of voting nodes is to use the **Node and File Share Majority** quorum mode.  This is dependent on a remote file share configured as a voting witness.  Ideally this file share should be in an alternative location to the A, and B nodes of the Cluster.
+
 The table below details the configuration of the file share witness:
