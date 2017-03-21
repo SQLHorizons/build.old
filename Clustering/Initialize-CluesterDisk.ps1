@@ -28,7 +28,7 @@ Function Initialize-CluesterDisk
         $ClusterDisk.Name = $Label
     }
 
-    $PartParams = @{DiskNumber = $Disk.Number; UseMaximumSize = $true }
+    $PartParams = @{DiskNumber = $DiskNumber; UseMaximumSize = $true }
     $Partition = New-Partition @PartParams
 
     #while($Partition.OperationalStatus -ne "Online"){Start-Sleep -Seconds 2}
