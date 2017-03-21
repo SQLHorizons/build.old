@@ -8,7 +8,7 @@ Function Prepare-Disk
 
     )
 
-    $Disk = Get-Disk -Number $DiskNumber
+    $Disk = Get-Disk -Number $Number
 
     if ($Disk.IsOffline -eq $true)
     {
