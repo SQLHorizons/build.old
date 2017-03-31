@@ -1,3 +1,6 @@
+#Ref: https://blogs.endjin.com/2014/07/how-to-retry-commands-in-powershell/
+
+
 function Retry-Command
 {
     param (
