@@ -8,38 +8,42 @@ Function Grant-SPNModify
         [parameter(Mandatory = $true)]
         [pscredential]$Credential
     )
-
-    Write-Verbose "[Starting] $($MyInvocation.Mycommand)" 
-
+    
     $do = {
-    Param(
-    $ADObject
-    )
-    
-    $rootDSE = [ADSI]"LDAP://RootDSE"
-    $schemaDN = $rootDSE.psbase.properties["schemaNamingContext"][0]
-    $spnEntry = [ADSI]"LDAP://CN=Service-Principal-Name,$schemaDN"
-    $spnSecGuid = New-Object -TypeName System.Guid @( ,$spnEntry.psbase.Properties["schemaIDGUID"][0])
+        Param(
+        [object]$ADObject
+        )
 
-    [Security.Principal.IdentityReference]$Identity = [security.principal.ntaccount]"NT AUTHORITY\SELF"
-    
-    $adRight = [DirectoryServices.ActiveDirectoryRights]"readproperty,writeproperty"
-    
-    $spnAce = New-Object -TypeName DirectoryServices.ActiveDirectoryAccessRule($identity, $adRight, "Allow", $spnSecGuid, "None")
+        $root     = [ADSI]"LDAP://RootDSE"
+        $schema   = $root.psbase.properties["schemaNamingContext"][0]
+        $spnEntry = [ADSI]"LDAP://CN=Service-Principal-Name,$schema"
 
-    $TargetObject = [ADSI]"LDAP://$($ADObject.DistinguishedName)"
-    $TargetObject.psbase.ObjectSecurity.AddAccessRule($spnAce)
-    $TargetObject.psbase.CommitChanges()
+        $spnSGuid = New-Object System.Guid @( ,$spnEntry.psbase.Properties["schemaIDGUID"][0])
+        $identity = New-Object Security.Principal.NTAccount("NT AUTHORITY\SELF")
+        $spnAce   = New-Object DirectoryServices.ActiveDirectoryAccessRule($identity, "ReadProperty,WriteProperty", "Allow", $spnSGuid, "None")
+        # $spnAce
+        $TargetObject = [ADSI]"LDAP://$($ADObject.DistinguishedName)"
+        $TargetObject.psbase.ObjectSecurity.AddAccessRule($spnAce)
+        $TargetObject.psbase.CommitChanges()
+        # $TargetObject.psbase.ObjectSecurity.Access | Where-Object {$_.ObjectType -eq $spnSGuid}
     }
+
+    Enable-WSManCredSSP -Role "Client" -DelegateComputer $env:COMPUTERNAME -Force | Out-Null
+    Enable-WSManCredSSP -Role Server –Force | Out-Null
+
+    $PSSessionparam = @{
+        ComputerName = $env:COMPUTERNAME
+        Authentication = "Credssp"
+        Credential = $Credential
+    }
+    $PSSession = New-PSSession @PSSessionparam
 
     $InvokeCmdparam = @{
         ScriptBlock = $do
         ArgumentList = $Account
-        Credential = $Credential
-        ComputerName = $env:COMPUTERNAME
+        Session = $PSSession
     }
+    Invoke-Command @InvokeCmdparam
 
-    Invoke-Command @InvokeCmdparam #| Select-Object * -ExcludeProperty runspaceID
-
-    Write-Verbose "[Ending]  $($MyInvocation.Mycommand)" 
+    $PSSession | Disconnect-PSSession | Remove-PSSession
 }
