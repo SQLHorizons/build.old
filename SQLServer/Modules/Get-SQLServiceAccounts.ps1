@@ -28,9 +28,3 @@
     }
     Return $SA_Accounts
 }
-
-<#
-$ConfigurationFile = "\\library\AllSQLUpdates\ConfigurationFiles\$($env:COMPUTERNAME)-ConfigurationFile.ini"
-
-Get-SQLServiceAccounts "S1" "SQLInfo" $ConfigurationFile
-#>

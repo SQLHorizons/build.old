@@ -11,8 +11,6 @@
         [string]$ComputerName
     )
     
-    Get-SQLPSModule
-    
     $SQLServer = New-Object -TypeName Microsoft.SqlServer.Management.Smo.Server -ArgumentList $ComputerName
     $ServerRole = $SQLServer.Roles.Item("sysadmin")
     

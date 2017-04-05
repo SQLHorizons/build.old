@@ -14,8 +14,6 @@
         [string]$TextBody
     )
 
-    Get-SQLPSModule
-
     try
     {
         $srvobj = New-Object -TypeName Microsoft.SqlServer.Management.SMO.Server($SQLServer)

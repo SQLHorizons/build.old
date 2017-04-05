@@ -1,4 +1,4 @@
-﻿Function Install-DatabaseMaintenancePlans
+Function Install-DatabaseMaintenancePlans
 {
     [CmdletBinding(DefaultParameterSetName = "Default", SupportsShouldProcess = $true)]
     param
@@ -9,11 +9,9 @@
         [object]$files
     )
     
-    Get-SQLPSModule
-    
     foreach ($file in $files)
     {
-        Invoke-Sqlcmd -InputFile $file -ServerInstance $SQLServer -ConnectionTimeout 300
+        Submit-SQLScript -InputFile $file -ServerInstance $SQLServer -ConnectionTimeout 300 -Verbose
     }
     
     $jobs = @('SQLOPs - CommandLog Cleanup'
@@ -32,10 +30,13 @@
     
     foreach ($job in $jobs)
     {
-        $command += "EXEC [msdb].[dbo].[sp_start_job] N'$job'"
-        Write-Host $command
-        Invoke-Sqlcmd $command -Database 'msdb' -ServerInstance $SQLServer
+        $Jobparameters = @{
+            sqlServer = $SQLServer
+            SQLjob    = $job
+            Verbose   = $true
+        }
+
+        $Job = Invoke-SQLJob @Jobparameters
         Start-Sleep -Milliseconds 1500
-        $command = $null
     }
 }
