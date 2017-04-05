@@ -6,3 +6,16 @@ PowerShell is an automation platform and scripting language for the Windows Oper
 While PowerShell is a component of the current Windows Operating System, features of Windows Management Framework (WMF) 5.0 are used within this deployment guide, this is a separate installation package for Windows Server 2012 R2 and below 
 The PowerShell scripts and functions for this guide are located in \\library\PoSh\00_Builds\00_SQLServer
 Using the Windows PowerShell ISE, run as Administrator and execute the following script:
+
+```powershell
+# Install WMF 5.0
+
+$WMFmsu = "\\library\PoSh$\WMF5.0\Win8.1AndW2K12R2-KB3134758-x64.msu"
+
+$MSUArguments = @(
+    "/install $WMFmsu"
+    "/quiet"
+    "/warnrestart"
+)
+Start-Process "wusa" -ArgumentList $MSUArguments -Wait -NoNewWindow
+```
