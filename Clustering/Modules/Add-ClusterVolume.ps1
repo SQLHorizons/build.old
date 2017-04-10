@@ -14,12 +14,14 @@ Function Add-ClusterVolume
     {
         Write-Verbose -Message "Checking     existing disk partition style..."
         if ($Disk.PartitionStyle -ne "RAW")
-        {
-            Set-DiskOnline -Disk $Disk    
+        {           
+            Set-DiskOnline -Disk $Disk
+            Write-Verbose -Message "Clearing Disk, RemoveData and RemoveOEM."    
             Clear-Disk -Number $Disk.Number -RemoveData –RemoveOEM -Confirm:$false
         }
 
         Write-Verbose -Message "Initializing disk number '$($Disk.Number)'."
+        Start-Sleep -Seconds 15
         Set-DiskOnline -Disk $Disk
         $Disk | Initialize-Disk -PartitionStyle "GPT" -PassThru|Out-Null
 
@@ -41,7 +43,6 @@ Function Add-ClusterVolume
 
             if($ClusterDisk.State -eq "Offline")
             {
-                #$ClusterResource = Retry-Command -Command "Start-ClusterResource" -Args @{ InputObject = "$ClusterDisk" } -Verbose
                 $ClusterResource = Start-ClusterResource -InputObject $ClusterDisk
             }
 
