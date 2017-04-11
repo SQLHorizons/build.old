@@ -7,7 +7,9 @@ Function Add-ClusterVolume
         [parameter(Mandatory = $true, ValueFromPipeline = $false)]
         [string]$Label,
         [parameter(Mandatory = $true, ValueFromPipeline = $false)]
-        [string]$AccessPath
+        [string]$AccessPath,
+        [parameter(Mandatory = $true, ValueFromPipeline = $false)]
+        [string]$Group
     )
 
     if($Disk)
@@ -68,7 +70,7 @@ Function Add-ClusterVolume
 
             $PartitionAccessPath = Add-PartitionAccessPath @AddPartitionAccessPath
 
-            Move-ClusterResource -InputObject $ClusterDisk -Group "DB-OC01"
+            Move-ClusterResource -InputObject $ClusterDisk -Group $Group
 
             if($ClusterDisk.Name -ne "System")
             {
@@ -76,7 +78,7 @@ Function Add-ClusterVolume
             }
             else
             {
-                New-Item "S:\Data_X\backup_01", "S:\Data_X\data_01", "S:\Data_X\tLog_01", "S:\Data_X\dtc_01" -type directory | Out-Null
+                New-Item "$AccessPath\Data_X\backup_01", "$AccessPath\Data_X\data_01", "$AccessPath\Data_X\tLog_01", "$AccessPath\Data_X\dtc_01" -type directory | Out-Null
             }
         }
     }
