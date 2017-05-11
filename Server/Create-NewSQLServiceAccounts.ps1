@@ -1,22 +1,23 @@
-#Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force -ErrorAction SilentlyContinue
-
-$library = "\\library\PoSh$\00_Builds\00_Server"
-Push-Location -Path $library
-
-Push-Location -Path "$library\Modules"
-foreach($module in Get-ChildItem)
+function Switch-DNSResourceRecord
 {
-    Import-Module ".\$module"
+
+    [System.Net.IPAddress]$ipAddr1 = "10.34.82.49"
+    [System.Net.IPAddress]$ipAddr2 = "10.129.81.35"
+    [string]$dnsServer             = "IS-OC02"
+
+    $CommonParameters = @{
+        ComputerName = $dnsServer
+        ZoneName     = $($env:USERDNSDOMAIN.ToLower())
+        }
+
+    $oldhostRecord = Get-DnsServerResourceRecord @CommonParameters -Name mitel-db
+    $newhostRecord = $oldhostRecord.PSObject.Copy()
+
+    switch ($oldhostRecord.RecordData.IPv4Address)
+    {
+        $ipAddr1 {$newhostRecord.RecordData.IPv4Address = $ipAddr2}
+        $ipAddr2 {$newhostRecord.RecordData.IPv4Address = $ipAddr1}
+    }
+    Set-DnsServerResourceRecord @CommonParameters -NewInputObject $newhostRecord -OldInputObject $oldhostRecord
+    $newhostRecord.RecordData.IPv4Address
 }
-Pop-Location
-
-$dns = $($env:USERDNSDOMAIN.ToLower())
-
-$SAparameters = @{
-    Server = $(Read-Host "SQL Server Name")
-    Credential = Get-Credential
-    AccountOU = "OU=SQL,OU=SERVICE ACCOUNTS,DC=SQLHorizons,DC=com"
-    dnsDomain = $dns
-}
-
-New-SQLServiceAccounts @SAparameters -Verbose
