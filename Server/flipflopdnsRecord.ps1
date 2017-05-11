@@ -8,7 +8,9 @@ function Switch-DNSResourceRecord
         [parameter(Mandatory = $false)]
         [System.Net.IPAddress]$ipAddr2 = "10.129.81.35",
         [parameter(Mandatory = $false)]
-        [string]$dnsServer             = "IS-OC02"
+        [string]$dnsServer             = "IS-OC02",
+        [parameter(Mandatory = $false)]
+        [string]$hostdns               = "mitel-db"
     )
 
     $CommonParameters = @{
@@ -17,7 +19,7 @@ function Switch-DNSResourceRecord
         Verbose      = $true
         }
 
-    $oldhostRecord = Get-DnsServerResourceRecord @CommonParameters -Name mitel-db
+    $oldhostRecord = Get-DnsServerResourceRecord @CommonParameters -Name $hostdns
     $newhostRecord = $oldhostRecord.PSObject.Copy()
 
     switch ($oldhostRecord.RecordData.IPv4Address)
